@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Quiz Application</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="quiz-container">
-      <div class="quiz-box">
-        <h2 class="quiz-title">Quiz Application</h2>
-        <label for="difficulty" class="quiz-label"
-          >Select Difficulty Level:</label
-        >
-        <select id="difficulty" class="quiz-select">
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-        <button class="quiz-button start-btn">Start Quiz</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Pokedex</h1>
+    </header>
+    <main>
+        <section id="pokedex" class="pokemon-grid"></section>
+        <button id="load-more" class="load-more">Load More</button>
+    </main>
 
-        <div class="score-board">
-          <p>Correct Answer: <span id="correct-score">0</span></p>
-          <p>Incorrect Answer: <span id="incorrect-score">1</span></p>
+    <!-- Modal for Pokemon Details -->
+    <div id="pokemon-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="pokemon-details"></div>
+            <button id="catch-button" class="catch-button">Catch</button>
         </div>
-        <button class="quiz-button reset-btn">Reset Score</button>
-      </div>
     </div>
-  </body>
+
+    <script src="script.js"></script>
+</body>
 </html>
