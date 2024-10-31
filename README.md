@@ -1,134 +1,103 @@
 # aman_Capstone
 # NAME-AMAN
 # STUDENT ID- 041134560
-# PROJECT- QUIZ SITE
+# PROJECT- Pokedox
 
 # Mockup Design Report
 
+# Pokedex Web Application
+
+**Project Title**: Pokedex  
+**Objective**: Build an interactive Pokedex using the [PokeAPI](https://pokeapi.co/), allowing users to browse, view details, and mark Pokemon as "caught."
+
+---
+
 ## 1. Overview
-This mockup was created for the Quiz Web Application project as part of Capstone Project - Part 2. The design demonstrates the various user actions, layouts, and components necessary for a responsive web application. The mockup also establishes the visual aesthetics of the application, including colors, fonts, and branding.
 
-## 2. Design Elements and User Actions
-The mockup covers the following core user actions:
-- **Selecting Difficulty Level**: Users can select a difficulty level (Easy, Medium, or Hard) before fetching a question.
-- **Displaying Quiz Question and Answers**: A quiz question is displayed with multiple choice answers. Users can select an answer and submit it.
-- **Correct/Incorrect Feedback**: After submitting an answer, users receive feedback indicating whether their choice was correct or incorrect.
-- **Score Tracking**: The number of correct and incorrect answers is displayed, updated after each question.
-- **Reset Button**: Users can reset their score using a clear and easily accessible reset button.
-
-## 3. Responsive Layouts
-The mockup demonstrates the layout for both desktop and mobile screen sizes:
-- **Desktop Layout**: The form, question, and answer sections are displayed side by side for easy navigation and visibility on larger screens.
-- **Mobile Layout**: On smaller screens, the elements stack vertically, ensuring readability and accessibility without clutter.
-  
-Both layouts ensure the application is fully responsive, offering a consistent experience across various devices.
-
-## 4. Colors, Fonts, and Branding
-### Colors:
-- **Primary Color**: `#3498db` (Bright Blue) - Used for buttons, borders, and active elements.
-- **Secondary Color**: `#2ecc71` (Green) - Used for correct answer indication and feedback.
-- **Error Color**: `#e74c3c` (Red) - Used for incorrect answers and error messages.
-- **Background Color**: `#f5f5f5` (Light Grey) - Used as a background to give a clean and modern feel.
-
-### Fonts:
-- **Primary Font**: Roboto, sans-serif – Chosen for its clarity and readability across screen sizes.
-- **Heading Font**: Lato, sans-serif – A slightly bold font used for headings and emphasis, providing a professional look.
-
-## 5. User Experience Considerations
-The design prioritizes simplicity and usability, ensuring that users can quickly:
-- Select a difficulty level
-- Answer questions
-- Receive feedback on their performance
-
-The color scheme ensures that feedback (correct/incorrect answers) is immediately recognizable, enhancing user engagement.
-
-## 6. Mockup Software
-The mockup was created using Adobe XD to visualize and prototype the layout and design elements for both mobile and desktop screens.
-
-## 7. Conclusion
-The design decisions were made to ensure a user-friendly, responsive web application that provides an engaging and interactive quiz experience. The mockup reflects careful consideration of layout, color, and typography to enhance both functionality and aesthetics.
-----------------------------------------------------------------------------------------------------------------------------------
-
-# Prototype Report
-
-# Quiz Application Prototype
-
-## Overview
-This is a prototype for the Capstone Project - Part 3. The prototype is built using HTML, CSS, and JavaScript. It is designed to closely match the provided mockup and to be fully responsive. The application allows users to select a quiz difficulty level, start the quiz, view the current score (correct/incorrect answers), and reset the score.
+This project is an interactive Pokedex application that retrieves Pokemon data from the PokeAPI. It enables users to:
+- View a grid of Pokemon thumbnails and names.
+- Load additional Pokemon.
+- Click on a Pokemon to view detailed information in a modal.
+- Mark Pokemon as "caught" and store this status locally.
 
 ---
 
-## Steps Taken to Build the Prototype
+## 2. Steps Taken to Build the Prototype
 
-### 1. Setting Up the Project
-- Created an `index.html` file for the structure of the quiz application.
-- Created a `style.css` file for the styling of the application.
-- Used semantic HTML to structure the layout (e.g., `div`, `h2`, `button`, `select` elements).
-- Used CSS Flexbox for aligning the quiz container at the center of the screen, both vertically and horizontally.
-- Ensured the application has a modern look by using rounded borders, shadow effects, and consistent padding/margins.
+### 1. Project Setup
+- **File Structure**: Created an `index.html` for layout, `style.css` for styling, and `script.js` for functionality.
+- **HTML Layout**: Used semantic HTML to structure the main elements (header, main section, buttons).
+- **CSS Styling**: Applied responsive styling with CSS Grid and Flexbox, defining classes for a grid layout, modal design, and "caught" Pokemon styling.
+- **JavaScript**: Built functions for API interaction, Pokemon rendering, modal display, and "catch" functionality using `localStorage`.
 
-### 2. Creating the HTML Structure
-- The main container (`quiz-box`) holds all the components of the quiz:
-  - A heading (`h2`) for the quiz title.
-  - A dropdown (`select`) for selecting the difficulty level of the quiz.
-  - Two buttons: one for starting the quiz and another for resetting the score.
-  - A section for displaying the score (correct and incorrect answers).
-- Each component has been given a class name to make it easy to apply styling through CSS.
+### 2. Fetching and Displaying Pokemon
+- **API Calls**: Used the PokeAPI `/pokemon` endpoint to retrieve batches of 20 Pokemon, displaying them in a grid layout.
+- **Pokemon Details Fetch**: Each Pokemon’s detailed data (name, sprite, abilities, and types) is fetched individually when clicked, enhancing the display in a modal.
+- **Dynamic Rendering**: Displayed Pokemon thumbnails with their names; each Pokemon card is clickable for detailed viewing.
 
-### 3. Designing the UI with CSS
-- Defined a color scheme for the application:
-  - **Title:** Blue (#2e67f8) for the heading to make it stand out.
-  - **Buttons:**
-    - Start Quiz: Blue (#2e67f8) to make it prominent.
-    - Reset Score: Grey (#a9a9a9) to indicate it's a secondary action.
-- Added a box shadow to the quiz container to give it a slightly raised effect.
-- Buttons have a consistent size and rounded corners for a modern look.
-- Used Flexbox for centering and aligning the elements inside the quiz container, making the layout clean and organized.
-- Media queries were implemented to ensure responsiveness for smaller screen sizes (e.g., mobile devices).
+### 3. Pokemon Details Modal
+- **Structure**: Created a modal to display detailed Pokemon data, including types and abilities.
+- **Interaction**: Enabled users to close the modal via a button or by clicking outside the modal area.
+- **Catch/Release Feature**: Added a "catch" button in the modal to toggle the "caught" status of each Pokemon. The "caught" state is stored in `localStorage`, allowing data persistence across sessions.
 
-### 4. Making the Prototype Responsive
-- Added a media query that adjusts the width of the quiz container for smaller devices.
-- Ensured that the quiz application looks good and functions well on different screen sizes by testing it on both desktop and mobile browsers.
-- Used relative units (like percentages) in some areas to make the layout more fluid.
+### 4. Handling User Actions
+- **Load More**: Users can load additional batches of 20 Pokemon by clicking the "Load More" button.
+- **Catch Status**: Users can mark a Pokemon as "caught." Caught Pokemon appear with a different style, indicating they are in the user's collection.
+- **Local Storage**: Used `localStorage` to save the caught Pokemon list, making sure data is persistent across sessions.
 
 ---
 
-## Resources Used
-### 1. CSS Framework:
-- No external CSS framework was used, though Bootstrap or Tailwind could be integrated in future iterations for faster development and built-in responsiveness.
+## 3. Design Elements and User Actions
 
-### 2. Font and Icon Resources:
-- Used default system fonts for simplicity. Additional fonts (e.g., Google Fonts) could be integrated if needed.
+### User Actions
+- **Load More Pokemon**: Loads the next set of Pokemon from the API.
+- **View Details**: Opens a modal with additional details about the selected Pokemon.
+- **Catch/Release Toggle**: Adds or removes a Pokemon from the user's caught list and saves the status in local storage.
 
-### 3. Browser Developer Tools:
-- Utilized Chrome Developer Tools for testing responsiveness and debugging layout issues during development.
+### Visual Design
+- **Colors**:
+  - Primary color: `#ef5350` (red) for the header and buttons.
+  - Secondary color: `#a5d6a7` (green) to indicate caught Pokemon.
+  - Background color: `#f5f5f5` (light gray) for Pokemon cards.
 
----
-
-## Challenges Faced
-1. **Centering the Quiz Box:**
-   - Initially, centering the quiz box was a challenge, especially when accounting for different screen sizes. This was solved by using Flexbox, which allowed for vertical and horizontal centering in the viewport.
-   
-2. **Button Styling:**
-   - Ensuring the buttons were visually appealing and consistent across browsers required additional styling. This was achieved by removing the default browser styles and adding custom padding, font sizes, and colors.
-
-3. **Responsiveness:**
-   - Handling small screen sizes was challenging, as the quiz box needed to remain centered without breaking the layout. I addressed this by adjusting the width of the container for screens smaller than 480px using media queries.
+- **Fonts**: Used Arial for readability and simplicity.
+- **Icons**: Pokemon sprites are pulled directly from the PokeAPI sprite URL.
 
 ---
 
-## Future Enhancements
-- Add JavaScript for quiz logic:
-  - Implement functionality to dynamically change questions and track scores.
-  - Handle different quiz difficulty levels by providing different sets of questions based on the selection.
-- Integrate a CSS framework like Bootstrap or Tailwind for even faster development and more extensive pre-built components.
-- Add animations for transitions between quiz questions to make the experience more engaging for the user.
-- Improve accessibility features, such as keyboard navigation and screen reader support.
+## 4. Resources Used
+
+- **PokeAPI**: The primary data source for Pokemon information, including names, abilities, and types.
+- **JavaScript Fetch API**: For making HTTP requests to retrieve Pokemon data.
+- **Local Storage**: To persist the caught Pokemon list across page reloads.
 
 ---
 
-## How to Run the Project
-1. Download the project files (HTML, CSS, and optional JavaScript).
-2. Open the `index.html` file in any web browser.
-3. The quiz application should load, allowing you to select a difficulty level, start the quiz, and view/reset the score.
+## 5. Challenges Faced
+
+1. **Modal Functionality**:
+   - Ensuring that the modal closes properly when clicking outside it was challenging. This was addressed using event listeners that detected clicks outside the modal content area.
+
+2. **Persisting Caught Pokemon**:
+   - Saving and retrieving caught Pokemon data using `localStorage` required testing to ensure data consistency across sessions.
+
+3. **Responsive Design**:
+   - Maintaining a grid layout that adapts to various screen sizes was initially challenging, but was managed using CSS Grid and media queries.
+
+---
+
+## 6. Future Enhancements
+
+- **Add Search Functionality**: Allow users to search for specific Pokemon by name.
+- **Improve Styling**: Use animations to enhance the UX, especially when catching/releasing a Pokemon.
+- **Expand Caught Pokemon List**: Add a separate view to display all caught Pokemon in the user's collection.
+- **Accessibility Improvements**: Improve keyboard navigation and screen reader compatibility.
+
+---
+
+## 7. How to Run the Project
+
+1. Clone or download the project files.
+2. Open `index.html` in any web browser.
+3. The Pokedex application will load, allowing you to browse, view details, and catch/release Pokemon.
 
