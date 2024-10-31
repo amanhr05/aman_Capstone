@@ -1,99 +1,83 @@
-/* Basic reset and box-sizing */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #d3d3d3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Quiz container styling */
-.quiz-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    background-color: #d3d3d3;
-}
-
-/* Quiz box styling */
-.quiz-box {
-    background-color: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 350px;
-    max-width: 90%;
 }
 
-/* Quiz title styling */
-.quiz-title {
-    font-size: 24px;
-    color: #2e67f8;
-    margin-bottom: 20px;
-}
-
-/* Quiz label and select styling */
-.quiz-label {
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: block;
-    color: #333;
-}
-
-.quiz-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-}
-
-/* Quiz button styling */
-.quiz-button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
+header {
+    padding: 20px;
+    background-color: #ef5350;
     color: white;
 }
 
-.start-btn {
-    background-color: #2e67f8;
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
 }
 
-.reset-btn {
-    background-color: #a9a9a9;
+.pokemon-card {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    cursor: pointer;
 }
 
-/* Score board styling */
-.score-board {
-    margin-top: 20px;
+.pokemon-card img {
+    max-width: 100%;
 }
 
-.score-board p {
-    font-size: 14px;
-    color: #333;
+.load-more {
+    padding: 10px 20px;
+    background-color: #ef5350;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
 }
 
-/* Responsive styling */
-@media (max-width: 480px) {
-    .quiz-box {
-        width: 90%;
-    }
+.caught {
+    background-color: #a5d6a7 !important;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    margin: auto;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.catch-button {
+    padding: 10px;
+    background-color: #ffeb3b;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
 }
