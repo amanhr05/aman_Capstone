@@ -1,80 +1,179 @@
-const POKE_API_URL = 'https://pokeapi.co/api/v2/pokemon/';
-const pokedexElement = document.getElementById('pokedex');
-const loadMoreButton = document.getElementById('load-more');
-const modal = document.getElementById('pokemon-modal');
-const modalContent = document.getElementById('pokemon-details');
-const catchButton = document.getElementById('catch-button');
-const closeModalButton = document.querySelector('.close');
-
-let offset = 0;
-let caughtPokemon = JSON.parse(localStorage.getItem('caughtPokemon')) || [];
-
-// Fetch and display initial Pokemon
-async function fetchAndDisplayPokemon() {
-    const response = await fetch(`${POKE_API_URL}?offset=${offset}&limit=20`);
-    const data = await response.json();
-    data.results.forEach(async (pokemon) => {
-        const pokemonData = await fetchPokemonData(pokemon.url);
-        displayPokemon(pokemonData);
+document.addEventListener('DOMContentLoaded', () => {
+    const loginPage = document.getElementById('login-page');
+    const header = document.getElementById('header');
+    const mainContent = document.getElementById('main-content');
+    const loginForm = document.querySelector('.login-container form');
+    const usernameInput = document.querySelector('input[type="text"]');
+    const passwordInput = document.querySelector('input[type="password"]');
+    const validUsername = 'admin';
+    const validPassword = 'admin';
+  
+    const searchBar = document.getElementById('search-bar');
+    const searchBtn = document.getElementById('search-btn');
+    const pokemonGallery = document.getElementById('pokemon-gallery');
+    const loadMoreButton = document.getElementById('load-more');
+    const pokemonDetails = document.getElementById('pokemon-details');
+    const pokemonName = document.getElementById('pokemon-name');
+    const pokemonInfo = document.getElementById('pokemon-info');
+    const pokemonAbilities = document.getElementById('pokemon-abilities');
+    const closeModalButton = document.getElementById('close-modal');
+    const caughtPokemonGallery = document.getElementById('caught-pokemon-gallery');
+  
+    let pokemonOffset = 0;
+    const pokemonLimit = 12;
+    const caughtPokemonList = [];
+  
+   
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+  
+      if (username === validUsername && password === validPassword) {
+        loginPage.style.display = 'none';
+        header.style.display = 'block';
+        mainContent.style.display = 'block';
+        fetchPokemonData(pokemonOffset, pokemonLimit);
+      } else {
+        alert('Invalid username or password!');
+      }
     });
-    offset += 20;
-}
-
-async function fetchPokemonData(url) {
-    const response = await fetch(url);
-    return await response.json();
-}
-
-// Display Pokemon in the grid
-function displayPokemon(pokemon) {
-    const card = document.createElement('div');
-    card.classList.add('pokemon-card');
-    if (caughtPokemon.includes(pokemon.id)) {
-        card.classList.add('caught');
+  
+    async function fetchPokemonData(offset, limit) {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`);
+      const data = await response.json();
+      displayPokemon(data.results);
     }
-    card.innerHTML = `
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}">
-        <p>${pokemon.name}</p>
-    `;
-    card.addEventListener('click', () => showPokemonDetails(pokemon));
-    pokedexElement.appendChild(card);
-}
-
-// Show Pokemon details in modal
-function showPokemonDetails(pokemon) {
-    modalContent.innerHTML = `
-        <h2>${pokemon.name}</h2>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" alt="${pokemon.name}">
-        <p><strong>Abilities:</strong> ${pokemon.abilities.map(a => a.ability.name).join(', ')}</p>
-        <p><strong>Types:</strong> ${pokemon.types.map(t => t.type.name).join(', ')}</p>
-    `;
-    catchButton.textContent = caughtPokemon.includes(pokemon.id) ? 'Release' : 'Catch';
-    catchButton.onclick = () => toggleCatchStatus(pokemon);
-    modal.style.display = 'block';
-}
-
-// Toggle catch status and update local storage
-function toggleCatchStatus(pokemon) {
-    if (caughtPokemon.includes(pokemon.id)) {
-        caughtPokemon = caughtPokemon.filter(id => id !== pokemon.id);
-    } else {
-        caughtPokemon.push(pokemon.id);
+  
+ 
+    async function displayPokemon(pokemonList) {
+      pokemonGallery.innerHTML = '';
+  
+      for (const pokemon of pokemonList) {
+        const response = await fetch(pokemon.url);
+        const details = await response.json();
+        
+        const div = document.createElement('div');
+        div.className = 'pokemon';
+        div.innerHTML = `
+          <img src="${details.sprites.front_default}" alt="${details.name}" />
+          <h3>${details.name}</h3>
+          <button class="view-details" data-id="${details.id}">View Details</button>
+          <button class="catch-btn" data-id="${details.id}">Catch</button>
+        `;
+        pokemonGallery.appendChild(div);
+      }
+  
+      
+      document.querySelectorAll('.view-details').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const pokemonId = e.target.dataset.id;
+          viewPokemonDetails(pokemonId);
+        });
+      });
+  
+      document.querySelectorAll('.catch-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const pokemonId = e.target.dataset.id;
+          catchPokemon(pokemonId);
+        });
+      });
     }
-    localStorage.setItem('caughtPokemon', JSON.stringify(caughtPokemon));
-    modal.style.display = 'none';
-    pokedexElement.innerHTML = '';
-    offset = 0;
-    fetchAndDisplayPokemon();
-}
-
-// Event Listeners
-loadMoreButton.addEventListener('click', fetchAndDisplayPokemon);
-closeModalButton.addEventListener('click', () => (modal.style.display = 'none'));
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none';
+  
+   
+    async function viewPokemonDetails(pokemonId) {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+      const data = await response.json();
+      
+      pokemonName.textContent = data.name;
+      pokemonInfo.textContent = `Height: ${data.height} | Weight: ${data.weight}`;
+      
+      pokemonAbilities.innerHTML = '';
+      data.abilities.forEach(ability => {
+        const li = document.createElement('li');
+        li.textContent = ability.ability.name;
+        pokemonAbilities.appendChild(li);
+      });
+  
+      pokemonDetails.style.display = 'block';
     }
-});
-
-// Initial Load
-fetchAndDisplayPokemon();
+  
+    closeModalButton.addEventListener('click', () => {
+      pokemonDetails.style.display = 'none';
+    });
+  
+  
+    function catchPokemon(pokemonId) {
+      const pokemonName = document.querySelector(`button[data-id="${pokemonId}"]`).parentElement.querySelector('h3').textContent;
+      if (!caughtPokemonList.includes(pokemonName)) {
+        caughtPokemonList.push(pokemonName);
+        alert(`${pokemonName} has been caught!`);
+        displayCaughtPokemon();
+      } else {
+        alert(`${pokemonName} is already in your collection!`);
+      }
+    }
+  
+   
+    function displayCaughtPokemon() {
+      caughtPokemonGallery.innerHTML = '<h3>Caught Pokémon</h3>';
+  
+      if (caughtPokemonList.length > 0) {
+        const table = document.createElement('table');
+        table.innerHTML = `
+          <thead>
+            <tr><th>Name</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            ${caughtPokemonList.map(name => 
+              `<tr><td>${name}</td><td><button class="release-btn">Release</button></td></tr>`
+            ).join('')}
+          </tbody>
+        `;
+        caughtPokemonGallery.appendChild(table);
+  
+        
+        document.querySelectorAll('.release-btn').forEach(button => {
+          button.addEventListener('click', (e) => {
+            const row = e.target.parentElement.parentElement;
+            const pokemonName = row.querySelector('td').textContent;
+            releasePokemon(pokemonName);
+          });
+        });
+      } else {
+        caughtPokemonGallery.innerHTML += '<p>No Pokémon caught yet!</p>';
+      }
+    }
+  
+    
+    function releasePokemon(pokemonName) {
+      const index = caughtPokemonList.indexOf(pokemonName);
+      if (index !== -1) {
+        caughtPokemonList.splice(index, 1);
+        alert(`${pokemonName} has been released!`);
+        displayCaughtPokemon();
+      }
+    }
+  
+    
+    loadMoreButton.addEventListener('click', () => {
+      pokemonOffset += pokemonLimit;
+      fetchPokemonData(pokemonOffset, pokemonLimit);
+    });
+  
+   
+    searchBtn.addEventListener('click', () => {
+      const searchTerm = searchBar.value.toLowerCase();
+      const pokemonItems = document.querySelectorAll('.pokemon');
+  
+      pokemonItems.forEach(pokemon => {
+        const name = pokemon.querySelector('h3').textContent.toLowerCase();
+        if (name.includes(searchTerm)) {
+          pokemon.style.display = 'block';
+        } else {
+          pokemon.style.display = 'none';
+        }
+      });
+    });
+  });
+  

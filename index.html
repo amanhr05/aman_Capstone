@@ -1,29 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Pokedex</h1>
-    </header>
-    <main>
-        <section id="pokedex" class="pokemon-grid"></section>
-        <button id="load-more" class="load-more">Load More</button>
-    </main>
-
-    <!-- Modal for Pokemon Details -->
-    <div id="pokemon-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="pokemon-details"></div>
-            <button id="catch-button" class="catch-button">Catch</button>
+    <div id="login-page">
+        <div class="login-container">
+          <h1>Login</h1>
+          <form>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <div id="remember-me">
+              <input type="checkbox">
+              <span>Remember Me</span>
+            </div>
+            <button type="submit">Login</button>
+          </form>
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <div class="footer">
+            <p>Don't have an account? <a href="#">Sign up</a></p>
+          </div>
         </div>
+      </div>
+  
+  <header id="header" style="display:none;">
+    <h1>Pokedex</h1>
+    <div class="search-container">
+      <input type="text" id="search-bar" placeholder="Search Pokémon">
+      <button id="search-btn">Search</button>
     </div>
+  </header>
 
-    <script src="script.js"></script>
+  <main id="main-content" style="display:none;">
+    <section id="pokemon-gallery"></section>
+    <button id="load-more">Load More Pokémon</button>
+
+    <section id="caught-section">
+      <h2>Caught Pokémon</h2>
+      <div id="caught-pokemon-gallery"></div>
+    </section>
+  </main>
+
+  
+  <div id="pokemon-details" class="pokemon-details">
+    <button id="close-modal">Close</button>
+    <h3 id="pokemon-name"></h3>
+    <p id="pokemon-info"></p>
+    <h4>Abilities:</h4>
+    <ul id="pokemon-abilities"></ul>
+    <button id="catch-pokemon">Catch Pokémon</button>
+    <button id="release-pokemon">Release Pokémon</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
